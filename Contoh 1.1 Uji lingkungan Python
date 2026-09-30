@@ -1,0 +1,4 @@
+print("Struktur Data dan Algoritma")
+print("Python siap digunakan")
+import sys
+print(sys.version)
