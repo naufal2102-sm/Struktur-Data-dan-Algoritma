@@ -1,0 +1,9 @@
+class Node:
+  def __init__(self, data):
+    self.data = data
+    self.next = None
+
+Untuk mencoba kelas tersebut, jalankan kode berikut pada cell baru:
+node1 = Node(10)
+print(node1.data)
+print(node1.next)
