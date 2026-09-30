@@ -1,0 +1,7 @@
+mahasiswa = {
+  '22001': 'Alya',
+  '22002': 'Bima',
+  '22003': 'Citra'
+}
+
+print(mahasiswa.get('22003'))
