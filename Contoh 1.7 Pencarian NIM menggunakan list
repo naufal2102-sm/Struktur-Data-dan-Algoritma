@@ -1,0 +1,13 @@
+mahasiswa = [
+  ('22001', 'Alya'),
+  ('22002', 'Bima'),
+  ('22003', 'Citra')
+]
+
+def cari_nim(data, nim):
+  for item in data:
+    if item[0] == nim:
+      return item
+  return None
+
+print(cari_nim(mahasiswa, '22003'))
