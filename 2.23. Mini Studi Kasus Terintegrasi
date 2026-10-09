@@ -1,0 +1,53 @@
+nilai = [65, 72, 88, 75, 90, 72, 81, 77, 95, 68]
+
+print("Soal 1: data beserta indeks")
+for i, n in enumerate(nilai):
+    print(f"  indeks {i} : {n}")
+
+def linear_search(data, target):
+    for i, n in enumerate(data):
+        if n == target:
+            return i
+    return -1
+
+print("\nSoal 2: cari nilai 90")
+print("  Indeks nilai 90 :", linear_search(nilai, 90))
+
+print("\nSoal 3: semua kemunculan nilai 72")
+semua = [i for i, n in enumerate(nilai) if n == 72]
+print("  Indeks nilai 72 :", semua)
+print("  Jumlah muncul   :", len(semua))
+
+print("\nSoal 4: ubah indeks 0 menjadi 70")
+nilai[0] = 70
+print("  Data:", nilai)
+
+print("\nSoal 5: tambah 84 di akhir, sisipkan 76 di indeks 3")
+nilai.append(84)
+print("  Setelah append(84)   :", nilai)
+nilai.insert(3, 76)
+print("  Setelah insert(3, 76):", nilai)
+
+print("\nSoal 6: urutkan salinan dengan sorted()")
+terurut = sorted(nilai)
+print("  Data asli  :", nilai)
+print("  Data urut  :", terurut)
+
+def binary_search_trace(data, target):
+    left, right = 0, len(data) - 1
+    pemeriksaan = 0
+    while left <= right:
+        mid = (left + right) // 2
+        pemeriksaan += 1
+        print(f"  left={left:<3}right={right:<3}mid={mid:<3}data[mid]={data[mid]}")
+        if data[mid] == target:
+            return mid, pemeriksaan
+        elif data[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1, pemeriksaan
+
+print("\nSoal 7: Binary Search nilai 88 pada data terurut")
+idx, n = binary_search_trace(terurut, 88)
+print(f"  Ditemukan di indeks {idx} setelah {n} pemeriksaan")
