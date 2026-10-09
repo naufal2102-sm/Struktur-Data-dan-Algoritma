@@ -1,0 +1,152 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class SinglyLinkedList:
+    def __init__(self):
+        self.head = None
+        self.size = 0
+
+    def append(self, data):
+        new_node = Node(data)
+        if self.head is None:
+            self.head = new_node
+        else:
+            current = self.head
+            while current.next is not None:
+                current = current.next
+            current.next = new_node
+        self.size += 1
+
+    # Menghapus kemunculan PERTAMA nilai target.
+    # Mengembalikan True jika berhasil, False jika tidak ditemukan.
+    def delete(self, target):
+        # Kasus 1: list kosong
+        if self.head is None:
+            return False
+
+        # Kasus 2: yang dihapus adalah head
+        if self.head.data == target:
+            self.head = self.head.next
+            self.size -= 1
+            return True
+
+        # Kasus 3: node tengah / terakhir, perlu previous
+        previous = self.head
+        current = self.head.next
+        while current is not None:
+            if current.data == target:
+                previous.next = current.next   # lewati node current
+                self.size -= 1
+                return True
+            previous = current
+            current = current.next
+
+        # Kasus 4: nilai tidak ditemukan
+        return False
+
+    def to_list(self):
+        hasil = []
+        current = self.head
+        while current is not None:
+            hasil.append(current.data)
+            current = current.next
+        return hasil
+
+    def to_string(self):
+        if self.head is None:
+            return "(kosong)"
+        return " -> ".join(str(x) for x in self.to_list()) + " -> None"
+
+    def hitung_node(self):
+        # Menghitung node sebenarnya, untuk memeriksa konsistensi size
+        n = 0
+        current = self.head
+        while current is not None:
+            n += 1
+            current = current.next
+        return n
+
+
+def tampil(ll, judul, hasil):
+    print(judul)
+    print("  Hasil delete :", hasil)
+    print("  Isi list     :", ll.to_string())
+    print("  Jumlah node  :", ll.size)
+    print()
+
+
+# ===== Soal 1: delete pada list kosong =====
+ll = SinglyLinkedList()
+tampil(ll, "1. Hapus 10 dari list kosong", ll.delete(10))
+
+# ===== Soal 2: list satu node, lalu dihapus =====
+ll = SinglyLinkedList()
+ll.append(10)
+tampil(ll, "2a. List satu node (sebelum dihapus)", "-")
+tampil(ll, "2b. Hapus 10 (satu-satunya node)", ll.delete(10))
+
+# ===== Soal 3: list 5 node, hapus head, tengah, terakhir =====
+ll = SinglyLinkedList()
+for nilai in (10, 20, 30, 40, 50):
+    ll.append(nilai)
+tampil(ll, "3a. List awal", "-")
+tampil(ll, "3b. Hapus head (10)", ll.delete(10))
+tampil(ll, "3c. Hapus node tengah (30)", ll.delete(30))
+tampil(ll, "3d. Hapus node terakhir (50)", ll.delete(50))
+
+# ===== Soal 4: hapus nilai yang tidak ada =====
+tampil(ll, "4. Hapus 99 (tidak ada)", ll.delete(99))
+
+# ===== Soal 7: pengujian sendiri =====
+print("=== Pengujian tambahan ===")
+
+def cek(nama, kondisi):
+    assert kondisi, "GAGAL: " + nama
+    print("LULUS:", nama)
+
+# A. Nilai duplikat: hanya kemunculan pertama yang dihapus
+t = SinglyLinkedList()
+for x in (1, 2, 2, 3):
+    t.append(x)
+t.delete(2)
+cek("duplikat, hanya satu '2' terhapus", t.to_list() == [1, 2, 3])
+
+# B. Hapus node tepat setelah head
+t = SinglyLinkedList()
+for x in (1, 2, 3):
+    t.append(x)
+t.delete(2)
+cek("hapus node kedua, head tetap tersambung ke 3", t.to_list() == [1, 3])
+
+# C. Hapus nilai yang sama dua kali
+t = SinglyLinkedList()
+t.append(5)
+cek("hapus 5 pertama kali berhasil", t.delete(5) is True)
+cek("hapus 5 kedua kali mengembalikan False", t.delete(5) is False)
+
+# D. Append kembali setelah list dikosongkan
+t.append(7)
+cek("append setelah list kosong", t.to_list() == [7] and t.size == 1)
+
+# E. Hapus node terakhir lalu append: sambungan tidak boleh putus
+t = SinglyLinkedList()
+t.append(1)
+t.append(2)
+t.delete(2)
+t.append(9)
+cek("hapus ekor lalu append, hasil [1, 9]", t.to_list() == [1, 9])
+
+# F. size harus selalu sama dengan jumlah node sebenarnya
+t = SinglyLinkedList()
+for x in (1, 2, 3, 4, 5):
+    t.append(x)
+t.delete(1); t.delete(99); t.delete(3); t.delete(5)
+cek("size sama dengan jumlah node sebenarnya", t.size == t.hitung_node() == 2)
+
+# G. Kosongkan seluruh list satu per satu
+for x in (2, 4):
+    t.delete(x)
+cek("semua dihapus, head None dan size 0", t.head is None and t.size == 0)
