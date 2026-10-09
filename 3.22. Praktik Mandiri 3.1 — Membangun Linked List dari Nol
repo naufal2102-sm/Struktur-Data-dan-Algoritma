@@ -1,0 +1,28 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+node1 = Node(100)
+node2 = Node(200)
+node3 = Node(300)
+
+node1.next = node2
+node2.next = node3
+
+print("Soal 4: penelusuran dari node pertama")
+current = node1
+while current is not None:
+    print("  data =", current.data)
+    current = current.next
+
+print("\nSoal 6: node1.next diubah langsung ke node3")
+node1.next = node3
+
+current = node1
+hasil = []
+while current is not None:
+    hasil.append(str(current.data))
+    current = current.next
+print("  Struktur:", " -> ".join(hasil) + " -> None")
