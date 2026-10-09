@@ -1,0 +1,51 @@
+data = [42, 17, 8, 93, 56, 31, 74, 25, 61, 12, 88, 47, 3, 69, 20]
+print("Data  :", data)
+print("Jumlah:", len(data), "elemen\n")
+
+
+def linear_search_trace(data, target):
+    pemeriksaan = 0
+    for i in range(len(data)):
+        pemeriksaan += 1
+        print(f"  Pemeriksaan ke-{pemeriksaan}: data[{i}] = {data[i]}", end=" ")
+        if data[i] == target:
+            print("-> SAMA")
+            return pemeriksaan
+        print("-> beda")
+    print("  Target tidak ditemukan")
+    return pemeriksaan
+
+
+print("Soal 2: cari 42 (elemen pertama)")
+n_pertama = linear_search_trace(data, 42)
+print("  Jumlah pemeriksaan:", n_pertama, "\n")
+
+print("Soal 3: cari 20 (elemen terakhir)")
+n_terakhir = linear_search_trace(data, 20)
+print("  Jumlah pemeriksaan:", n_terakhir, "\n")
+
+print("Soal 4: cari 99 (tidak ada)")
+n_tidak_ada = linear_search_trace(data, 99)
+print("  Jumlah pemeriksaan:", n_tidak_ada, "\n")
+
+print("Soal 5: perbandingan")
+print(f"{'Kasus':<28}{'Pemeriksaan':<13}")
+print(f"{'Elemen pertama (42)':<28}{n_pertama:<13}")
+print(f"{'Elemen terakhir (20)':<28}{n_terakhir:<13}")
+print(f"{'Tidak ada (99)':<28}{n_tidak_ada:<13}")
+print()
+
+
+def linear_search(data, target):
+    pemeriksaan = 0
+    for i in range(len(data)):
+        pemeriksaan += 1
+        if data[i] == target:
+            return (i, pemeriksaan)
+    return (-1, pemeriksaan)
+
+
+print("Soal 6: hasil (index, jumlah_pemeriksaan)")
+print("  Cari 42 :", linear_search(data, 42))
+print("  Cari 20 :", linear_search(data, 20))
+print("  Cari 99 :", linear_search(data, 99))
