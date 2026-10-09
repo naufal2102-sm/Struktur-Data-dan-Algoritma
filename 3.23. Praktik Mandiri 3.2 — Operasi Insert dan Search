@@ -1,0 +1,113 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class SinglyLinkedList:
+    def __init__(self):
+        self.head = None          # list kosong
+        self.size = 0
+
+    def is_empty(self):
+        return self.head is None
+
+    # Menambah elemen di akhir list: O(n)
+    def append(self, data):
+        new_node = Node(data)
+        if self.head is None:
+            self.head = new_node
+        else:
+            current = self.head
+            while current.next is not None:
+                current = current.next
+            current.next = new_node
+        self.size += 1
+
+    # Menambah elemen di awal list: O(1)
+    def insert_beginning(self, data):
+        new_node = Node(data)
+        new_node.next = self.head
+        self.head = new_node
+        self.size += 1
+
+    # Menyisipkan data baru setelah node bernilai target: O(n)
+    def insert_after(self, target, data):
+        current = self.head
+        while current is not None:
+            if current.data == target:
+                new_node = Node(data)
+                new_node.next = current.next   # sambungkan ke penerus dulu
+                current.next = new_node        # baru sambungkan dari current
+                self.size += 1
+                return True
+            current = current.next
+        return False                           # target tidak ditemukan
+
+    # Menampilkan list
+    def display(self):
+        current = self.head
+        hasil = []
+        while current is not None:
+            hasil.append(str(current.data))
+            current = current.next
+        print(" -> ".join(hasil) + " -> None")
+
+    # Mencari nilai, mengembalikan True/False: O(n)
+    def search(self, target):
+        current = self.head
+        while current is not None:
+            if current.data == target:
+                return True
+            current = current.next
+        return False
+
+    # Mencari nilai, mengembalikan posisi (mulai dari 0) atau -1
+    def search_position(self, target):
+        current = self.head
+        position = 0
+        while current is not None:
+            if current.data == target:
+                return position
+            current = current.next
+            position += 1
+        return -1
+
+    # Dry run: mencetak tabel current dan position
+    def dry_run_search(self, target):
+        print(f"Dry run pencarian nilai {target}")
+        print(f"{'Langkah':<8}{'current':<10}{'position':<10}{'Sama?'}")
+        current = self.head
+        position = 0
+        langkah = 1
+        while current is not None:
+            sama = current.data == target
+            print(f"{langkah:<8}{current.data:<10}{position:<10}{'Ya' if sama else 'Tidak'}")
+            if sama:
+                print(f"Ditemukan di posisi {position}")
+                return position
+            current = current.next
+            position += 1
+            langkah += 1
+        print("Tidak ditemukan")
+        return -1
+
+from singly_linked_list import SinglyLinkedList
+
+ll = SinglyLinkedList()
+print("Kosong?", ll.is_empty())
+
+for nilai in (15, 25, 35, 45):
+    ll.append(nilai)
+
+ll.insert_beginning(5)
+ll.insert_after(25, 30)
+
+print("Linked list:", end=" ")
+ll.display()
+print("Ukuran:", ll.size)
+
+print("Cari 30:", "Ditemukan" if ll.search(30) else "Tidak ditemukan")
+print("Cari 99:", "Ditemukan" if ll.search(99) else "Tidak ditemukan")
+
+ll.dry_run_search(45)
