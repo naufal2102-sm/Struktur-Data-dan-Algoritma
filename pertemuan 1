@@ -1,1 +1,69 @@
+Contoh 1.1 Uji lingkungan Python
+print("Struktur Data dan Algoritma")
+print("Python siap digunakan")
+import sys
+print(sys.version)
 
+Contoh 1.2 Variabel, list, dan indeks
+nilai = [80, 75, 90, 85]
+print(nilai)
+print(nilai[0])
+print(nilai[-1])
+print(len(nilai))
+
+Contoh 1.3 Perulangan pada sekumpulan data
+data = [10, 20, 30, 40]
+for nilai in data:
+print(nilai)
+
+Contoh 1.4 Fungsi pencarian linear sederhana
+def cari(data, target):
+  for i in range(len(data)):
+    if data[i] == target:
+      return i
+  return -1
+
+data = [12, 20, 7, 30]
+print(cari(data, 7))
+print(cari(data, 99))
+
+Contoh 1.5 Bentuk awal node yang akan digunakan pada linked list
+class Node:
+  def __init__(self, data):
+    self.data = data
+    self.next = None
+
+Untuk mencoba kelas tersebut, jalankan kode berikut pada cell baru:
+node1 = Node(10)
+print(node1.data)
+print(node1.next)
+
+Contoh 1.6 Beberapa operasi dasar pada list
+data = [10, 20, 30]
+print(data[1]) # akses indeks
+data.append(40) # menambah di akhir
+data.insert(0, 5) # menyisipkan di awal
+
+Contoh 1.7 Pencarian NIM menggunakan list
+mahasiswa = [
+  ('22001', 'Alya'),
+  ('22002', 'Bima'),
+  ('22003', 'Citra')
+]
+
+def cari_nim(data, nim):
+  for item in data:
+    if item[0] == nim:
+      return item
+  return None
+
+print(cari_nim(mahasiswa, '22003'))
+
+Contoh 1.8 Pencarian NIM menggunakan dictionary
+mahasiswa = {
+  '22001': 'Alya',
+  '22002': 'Bima',
+  '22003': 'Citra'
+}
+
+print(mahasiswa.get('22003'))
